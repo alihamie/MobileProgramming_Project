@@ -109,7 +109,7 @@ public class ContactSelectionActivity extends AppCompatActivity {
                 }
                 if(number.length() > 6) {
                     contact.add(new Contact(name, "" + number));
-                   
+
                 }
 
                 data.close();
