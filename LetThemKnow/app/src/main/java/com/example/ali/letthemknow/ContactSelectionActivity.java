@@ -85,11 +85,10 @@ public class ContactSelectionActivity extends AppCompatActivity {
                  getContentResolver()
                 .query(ContactsContract.Contacts.CONTENT_URI,null,null,null,null);
 
-        if(contacts == null){
-            Log.e("TEAMFRAGMENT","Error Contacts cursor is null");
+        if(contacts == null) {
+            Log.e("TEAMFRAGMENT", "Error Contacts cursor is null");
 
         }
-        int i = 0;
         contacts.moveToFirst();
         while (contacts.moveToNext()){
             String name = contacts.getString(contacts.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
@@ -110,15 +109,16 @@ public class ContactSelectionActivity extends AppCompatActivity {
                 }
                 if(number.length() > 6) {
                     contact.add(new Contact(name, "" + number));
-                    i++;
+                   
                 }
-                if(i > 10)
-                    break;
+
                 data.close();
 
             }
 
         }
+        contact.add(new Contact("Ibrahim","9544151561"));
+        contact.add(new Contact("Rebbecca","8503227174"));
         contact.add(new Contact("",""));
         return contact;
     }

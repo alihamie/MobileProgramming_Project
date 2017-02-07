@@ -10,8 +10,8 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 
 public class PageFragmentAdapter extends FragmentPagerAdapter {
-    final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[] { "Tasks", "Team", "Steps" };
+    final int PAGE_COUNT = 4;
+    private String tabTitles[] = new String[] { "Tasks", "Team", "Steps" ,"Debug"};
     private Context context;
 
     public PageFragmentAdapter(FragmentManager fm, Context context) {
@@ -30,9 +30,11 @@ public class PageFragmentAdapter extends FragmentPagerAdapter {
         if(position == 0 ) {
             return TeamFragment.newInstance(position + 1);      // return instance of the tasks fragment
         }else  if(position == 1){
-            return PedFragment.newInstance("","");      // return instance of the teams fragment
-        }else {
-            return TeamFragment.newInstance(position + 1);      // return instance of the steps fragment
+            return TeamFragment.newInstance(position + 1);
+        }else if(position == 2){
+            return PedFragment.newInstance("","");
+        }else{
+            return DebugFragment.newInstance();
         }
     }
 
