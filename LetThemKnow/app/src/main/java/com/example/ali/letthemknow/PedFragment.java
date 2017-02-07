@@ -39,7 +39,7 @@ public class PedFragment extends Fragment implements SensorEventListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private float lastValue = 0;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -107,7 +107,9 @@ public class PedFragment extends Fragment implements SensorEventListener {
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                count.setText("0");
+
+                lastValue =  Float.parseFloat(count.getText().toString());
+                count.setText("0.0");
             }
         });
         // Inflate the layout for this fragment
@@ -118,6 +120,7 @@ public class PedFragment extends Fragment implements SensorEventListener {
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+
         }
     }
 
@@ -145,6 +148,9 @@ public class PedFragment extends Fragment implements SensorEventListener {
         Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         if (countSensor != null) {
             sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
+            //tried this with SensorManager.SENSOR_DELAY_FASTEST to get a better response time
+            //it really did not make any difference in this application
+            //SensorManager.SENSOR_DELAY_UI recommended rate for user interface
         } else {
             Toast.makeText(PedFragment.this.getActivity(), "Count sensor not available!", Toast.LENGTH_LONG).show();
         }
@@ -163,7 +169,7 @@ public class PedFragment extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (fragmentRunning) {
-            count.setText(String.valueOf(event.values[0]));
+            count.setText(String.valueOf(event.values[0] - lastValue));
         }
     }
 
